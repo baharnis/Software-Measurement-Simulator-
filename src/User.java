@@ -3,6 +3,13 @@ public class User {
     private String school;
     private String sessionName;
 
-    public User(String u, String s, String sn) {}
-    public boolean isValid() { return false; }
+    public User(String username, String school, String sessionName) {
+        this.username = username;
+        this.school = school;
+        this.sessionName = sessionName;
+    }
+
+    public boolean isValid() {
+        return !username.isEmpty() && !school.isEmpty() && !sessionName.isEmpty();
+    }
 }

@@ -1,7 +1,12 @@
-public class App {
+import javax.swing.*;
+
+public class Main {
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {}
+
         MeasurementController controller = new MeasurementController();
-        MainFrame frame = new MainFrame(controller);
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> new MainFrame(controller));
     }
 }
