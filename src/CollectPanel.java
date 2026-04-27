@@ -16,22 +16,32 @@ public class CollectPanel extends JPanel {
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent e) {
                 model.setRowCount(0);
-                for (Dimension d : controller.getScenario().getDimensions()) {
-                    for (Metric m : d.getMetrics()) {
-                        model.addRow(new Object[]{m.getName(), "", ""});
+                if (controller.getScenario() != null) {
+                    for (Dimension d : controller.getScenario().getDimensions()) {
+                        for (Metric m : d.getMetrics()) {
+                            model.addRow(new Object[]{m.getName(), "", ""});
+                        }
                     }
                 }
             }
         });
 
         calcBtn.addActionListener(e -> {
-            int row = 0;
-            for (Dimension d : controller.getScenario().getDimensions()) {
-                for (Metric m : d.getMetrics()) {
-                    m.setValue(Double.parseDouble(table.getValueAt(row++, 1).toString()));
+            try {
+                int row = 0;
+                for (Dimension d : controller.getScenario().getDimensions()) {
+                    for (Metric m : d.getMetrics()) {
+                        String valueStr = table.getValueAt(row++, 1).toString();
+                        m.setValue(Double.parseDouble(valueStr));
+                    }
                 }
+
+                frame.showPanel("5");
+                frame.getContentPane().repaint();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Please enter valid numeric values!");
             }
-            frame.showPanel("5");
         });
     }
 }
